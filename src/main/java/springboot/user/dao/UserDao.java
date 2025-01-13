@@ -10,7 +10,7 @@ public class UserDao {
         // alter table users modify column id int auto_increment;
 
         try (
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/springbook", "springbook", "springbook1234");
+                Connection connection = getConnection();
                 PreparedStatement ps = connection.prepareStatement("insert into  users values (?, ?, ?)");
         ) {
 
@@ -30,7 +30,7 @@ public class UserDao {
         User user = new User();
 
         try (
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/springbook", "springbook", "springbook1234");
+                Connection connection = getConnection();
                 PreparedStatement ps = connection.prepareStatement("select * from users where id = ?");
 
         ) {
@@ -51,5 +51,9 @@ public class UserDao {
             throw new RuntimeException(e);
         }
         return user;
+    }
+
+    private Connection getConnection() throws ClassNotFoundException, SQLException {
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/springbook", "springbook", "springbook1234");
     }
 }
